@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tech-World | Gadget Details</title>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+  <!-- Dynamic Navigation Bar Container -->
+  <div id="navbar-container"></div>
+
+  <main class="container detail-container">
+    <article>
+      <!-- Post Meta Header -->
+      <header class="detail-header">
+        <h1 class="detail-title" id="post-title">Gadget Title Loading...</h1>
+        <div class="detail-meta">
+          <div class="detail-meta-left">
+            <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=80&q=80" alt="Author" class="detail-author-pic" id="post-author-avatar">
+            <div>
+              <div class="detail-author-name" id="post-author-name">Publisher</div>
+              <div class="text-muted" style="font-size: 0.85rem;" id="post-date">May 2026</div>
+            </div>
+          </div>
+          <div class="detail-meta-right">
+            <!-- Dynamic Category/Date -->
+          </div>
+        </div>
+      </header>
+
+      <!-- Post Main Image Banner -->
+      <div class="detail-img-wrapper">
+        <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80" alt="Gadget cover" class="detail-img" id="post-image">
+      </div>
+
+      <!-- Social Interactions Bar (Like / Bookmark) -->
+      <div class="social-bar">
+        <button class="social-btn" id="like-btn">
+          <i class="far fa-heart"></i> <span id="likes-count">0</span> Likes
+        </button>
+        <button class="social-btn" id="bookmark-btn">
+          <i class="far fa-bookmark"></i> <span id="bookmark-text">Bookmark</span>
+        </button>
+      </div>
+
+      <!-- Main Article Description & Content Body -->
+      <section class="detail-body" id="post-content">
+        <p class="text-muted" id="post-description">Summary description...</p>
+        <div id="post-rich-content">
+          <!-- Main article body -->
+        </div>
+      </section>
+
+      <!-- Comments Section -->
+      <section class="comments-section">
+        <h3>Discussion (<span id="comments-count">0</span>)</h3>
+
+        <!-- Comment Input Box -->
+        <div class="comment-form">
+          <form id="comment-form">
+            <div class="comment-input-wrapper">
+              <textarea id="comment-text" placeholder="Share your thoughts about this gadget..." required></textarea>
+              <button type="submit" class="btn btn-primary" style="height: fit-content; align-self: flex-end;">
+                Post <i class="fas fa-paper-plane"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Comments Feed -->
+        <div class="comments-list" id="comments-list">
+          <!-- Comments dynamic loop -->
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <!-- Dynamic Footer Container -->
+  <div id="footer-container"></div>
+
+  <!-- JavaScript Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/post-detail.js"></script>
+</body>
+</html>

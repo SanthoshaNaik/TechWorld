@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tech-World | Gadget Reviews & Publishing</title>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+  <!-- Dynamic Navigation Bar Container -->
+  <div id="navbar-container"></div>
+
+  <main class="container">
+    <!-- Trending Gadget Image Carousel Slider -->
+    <section class="hero-slider" id="hero-slider">
+      <!-- Dynamically Populated Slide Cards -->
+      <div class="slider-dots" id="slider-dots"></div>
+    </section>
+
+    <!-- Search and Controls Row -->
+    <section class="controls-section">
+      <div class="controls-row">
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input type="text" id="search-input" placeholder="Search gadgets, articles, or keywords...">
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Posts Grid -->
+    <section class="posts-section">
+      <h2 class="section-title" style="margin-bottom: 24px;">Latest Gadgets & Articles</h2>
+      <div class="posts-grid" id="posts-grid">
+        <!-- Dynamically loaded post cards or loading skeleton -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Dynamic Footer Container -->
+  <div id="footer-container"></div>
+
+  <!-- JavaScript Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/index.js"></script>
+</body>
+</html>

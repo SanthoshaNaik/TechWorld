@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tech-World | Profile</title>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+  <!-- Dynamic Navigation Bar Container -->
+  <div id="navbar-container"></div>
+
+  <main class="container profile-wrapper">
+    <div class="profile-grid">
+      <!-- Profile Details Sidebar -->
+      <aside class="profile-sidebar">
+        <div class="profile-pic-container">
+          <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80" alt="Profile Picture" class="profile-avatar" id="sidebar-avatar">
+        </div>
+        <h2 id="sidebar-username">Username</h2>
+        <span class="profile-role-badge" id="sidebar-role">User</span>
+        
+        <div class="profile-details">
+          <p>
+            <strong>Email Address</strong>
+            <span id="sidebar-email">email@example.com</span>
+          </p>
+          <p>
+            <strong>Joined Date</strong>
+            <span id="sidebar-joined">May 2026</span>
+          </p>
+        </div>
+      </aside>
+
+      <!-- Main Profile Workspace -->
+      <section class="profile-main-content">
+        <div class="tab-container">
+          <div class="tab-header">
+            <button class="tab-btn active" id="tab-btn-edit">Edit Profile</button>
+            <button class="tab-btn" id="tab-btn-bookmarks">Bookmarked Gadgets</button>
+          </div>
+
+          <!-- Edit Profile Panel -->
+          <div class="tab-panel active" id="panel-edit">
+            <form id="profile-edit-form" novalidate>
+              <div class="form-group">
+                <label for="profile-username">Username</label>
+                <div class="form-input-wrapper">
+                  <i class="fas fa-user"></i>
+                  <input type="text" id="profile-username" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="profile-email">Email Address</label>
+                <div class="form-input-wrapper">
+                  <i class="fas fa-envelope"></i>
+                  <input type="email" id="profile-email" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="profile-pic-url">Profile Image URL</label>
+                <div class="form-input-wrapper">
+                  <i class="fas fa-image"></i>
+                  <input type="url" id="profile-pic-url" placeholder="Enter image URL (optional)">
+                </div>
+              </div>
+
+              <div class="form-group" style="margin-top: 30px; border-top: 1px solid var(--border); padding-top: 20px;">
+                <label for="profile-password">New Password (leave blank to keep current)</label>
+                <div class="form-input-wrapper">
+                  <i class="fas fa-lock"></i>
+                  <input type="password" id="profile-password" placeholder="Min 6 characters">
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary" style="margin-top: 10px;">
+                Save Changes <i class="fas fa-save"></i>
+              </button>
+            </form>
+          </div>
+
+          <!-- Bookmarked Posts Panel -->
+          <div class="tab-panel" id="panel-bookmarks" style="display: none;">
+            <div class="posts-grid" id="bookmarks-grid" style="margin-bottom: 0;">
+              <!-- Bookmarks dynamically populated -->
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Dynamic Footer Container -->
+  <div id="footer-container"></div>
+
+  <!-- JavaScript Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/profile.js"></script>
+</body>
+</html>

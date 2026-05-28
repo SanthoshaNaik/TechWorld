@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tech-World | Publisher Dashboard</title>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+  <!-- Dynamic Navigation Bar Container -->
+  <div id="navbar-container"></div>
+
+  <div class="dashboard-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="dashboard-sidebar">
+      <ul class="sidebar-menu">
+        <li class="sidebar-item">
+          <a href="#" class="sidebar-link active" id="menu-stats">
+            <i class="fas fa-chart-pie"></i> Overview
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="#" class="sidebar-link" id="menu-posts">
+            <i class="fas fa-file-alt"></i> Manage Posts
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="#" class="sidebar-link" id="menu-users">
+            <i class="fas fa-users"></i> Manage Users
+          </a>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- Main Workspace Area -->
+    <main class="dashboard-main">
+      <div class="dashboard-title-row">
+        <h1 id="dashboard-header-title">Publisher Dashboard</h1>
+        <button class="btn btn-primary" id="btn-create-post-shortcut" style="display: none;">
+          <i class="fas fa-plus"></i> New Post
+        </button>
+      </div>
+
+      <!-- Stats Cards Row (Overview) -->
+      <section class="stats-grid" id="stats-section">
+        <div class="stats-card">
+          <div class="stats-info">
+            <h4>Total Posts</h4>
+            <p id="stats-total-posts">0</p>
+          </div>
+          <div class="stats-icon posts">
+            <i class="fas fa-newspaper"></i>
+          </div>
+        </div>
+
+        <div class="stats-card">
+          <div class="stats-info">
+            <h4>Total Readers</h4>
+            <p id="stats-total-users">0</p>
+          </div>
+          <div class="stats-icon users">
+            <i class="fas fa-users"></i>
+          </div>
+        </div>
+
+        <div class="stats-card">
+          <div class="stats-info">
+            <h4>Total Interactions</h4>
+            <p id="stats-total-comments">0</p>
+          </div>
+          <div class="stats-icon comments">
+            <i class="fas fa-comments"></i>
+          </div>
+        </div>
+      </section>
+
+      <!-- Manage Posts Panel -->
+      <section class="dashboard-panel" id="panel-posts">
+        <div class="panel-header">
+          <h2>Articles List</h2>
+          <button class="btn btn-primary" id="btn-add-post">
+            <i class="fas fa-plus"></i> Create Post
+          </button>
+        </div>
+        <div class="table-wrapper">
+          <table class="dashboard-table">
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Likes</th>
+                <th>Comments</th>
+                <th>Created Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="posts-table-body">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Manage Users Panel -->
+      <section class="dashboard-panel" id="panel-users">
+        <div class="panel-header">
+          <h2>User Accounts</h2>
+        </div>
+        <div class="table-wrapper">
+          <table class="dashboard-table">
+            <thead>
+              <tr>
+                <th>Avatar</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Join Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="users-table-body">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Create/Edit Post Modal Overlay -->
+  <div class="modal-overlay" id="post-modal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h2 id="modal-title">Create Gadget Post</h2>
+        <button class="modal-close-btn" id="modal-close-btn">&times;</button>
+      </div>
+
+      <form id="post-form" enctype="multipart/form-data">
+        <input type="hidden" id="edit-post-id">
+        
+        <div class="form-group">
+          <label for="post-title-input">Title</label>
+          <div class="form-input-wrapper">
+            <i class="fas fa-heading"></i>
+            <input type="text" id="post-title-input" required placeholder="Enter gadget name or article title">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="post-desc-input">Short Description / Subtitle</label>
+          <div class="form-input-wrapper">
+            <i class="fas fa-quote-left"></i>
+            <input type="text" id="post-desc-input" required placeholder="Brief 1-line summary of the gadget review">
+          </div>
+        </div>
+
+        <!-- Image upload row -->
+        <div class="form-group">
+          <label for="post-image-input" id="image-label">Gadget Image Upload</label>
+          <div class="form-input-wrapper">
+            <i class="fas fa-file-image" style="top: 25px;"></i>
+            <input type="file" id="post-image-input" accept="image/*" style="padding: 10px 10px 10px 42px;">
+          </div>
+          <small class="text-muted">Recommended: JPG/PNG/WEBP under 5MB. Leave blank when editing to keep old image.</small>
+          <div id="image-preview-container" style="margin-top: 10px; display: none;">
+            <img src="" id="image-preview" style="max-height: 100px; border-radius: var(--radius-sm); border: 1px solid var(--border);">
+          </div>
+        </div>
+
+        <!-- Rich Content Simulation -->
+        <div class="form-group">
+          <label>Full Review Details (HTML Support)</label>
+          <div class="rich-editor-toolbar">
+            <button type="button" class="toolbar-btn" data-tag="h3" title="Add Heading 3">H3</button>
+            <button type="button" class="toolbar-btn" data-tag="b" title="Bold text"><i class="fas fa-bold"></i></button>
+            <button type="button" class="toolbar-btn" data-tag="i" title="Italic text"><i class="fas fa-italic"></i></button>
+            <button type="button" class="toolbar-btn" data-tag="li" title="Add list item"><i class="fas fa-list"></i></button>
+            <button type="button" class="toolbar-btn" data-tag="p" title="Add Paragraph">P</button>
+          </div>
+          <textarea class="rich-editor-area" id="post-content-input" required placeholder="<h3>Gadget Feature</h3><p>Describe specifications and details here...</p>"></textarea>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px;">
+          <button type="button" class="btn btn-outline" id="btn-cancel-modal">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btn-submit-post">Publish Post</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Dynamic Footer Container -->
+  <div id="footer-container"></div>
+
+  <!-- JavaScript Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

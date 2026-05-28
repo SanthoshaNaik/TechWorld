@@ -1,0 +1,12 @@
+# Node dependencies
+backend/node_modules/
+
+# Local database storage
+backend/data/
+
+# Local configuration secrets
+backend/.env
+
+# Uploaded gadget images (keep folder structure empty)
+backend/uploads/*
+!backend/uploads/.gitkeep
