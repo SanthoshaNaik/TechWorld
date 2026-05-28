@@ -7,9 +7,11 @@ A premium, modern full-stack technology gadget article reading and publishing pl
 #To Run the Project Locally
 1. open the MaongoDB Comppas Connect the Database
     mongodb://localhost:27017
-2. in cmd in backend folder
+2. run this coomand in the CMD
+   mongod --dbpath "C:\Users\Harshith N Naik\Desktop\TechWorld\backend\data\db" --port 27017
+4. in cmd in backend folder
    npm run dev  (cd "C:\Users\Harshith N Naik\Desktop\TechWorld\backend")
-3. in other cmd go to frontend
+5. in other cmd go to frontend
    "C:\Users\Harshith N Naik\Desktop\TechWorld\backend
        "C:\Users\Harshith N Naik\Desktop\TechWorld\backend login.html
 
