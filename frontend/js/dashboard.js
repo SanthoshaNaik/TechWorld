@@ -161,6 +161,8 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
+    const currentUser = Auth.getUser();
+
     usersTableBody.innerHTML = users.map(user => {
       const avatar = user.profilePic || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=80&q=80';
       const dateStr = new Date(user.createdAt).toLocaleDateString('en-US', {
@@ -173,12 +175,22 @@ document.addEventListener('DOMContentLoaded', () => {
         ? `<span class="text-muted" style="font-size: 0.8rem;">Publisher</span>`
         : `<button class="action-btn delete" data-id="${user._id}" title="Delete User Account"><i class="fas fa-user-slash"></i></button>`;
 
+      const isSelf = user._id === currentUser._id;
+      const roleColumn = isSelf
+        ? `<span class="profile-role-badge" style="font-size: 0.75rem; text-transform: capitalize;">${user.role}</span>`
+        : `
+          <select class="role-select" data-id="${user._id}" style="padding: 4px 8px; border-radius: var(--radius-sm); border: 1px solid var(--border); background-color: var(--surface); color: var(--text); font-size: 0.8rem; font-weight: 600; outline: none; cursor: pointer;">
+            <option value="user" ${user.role === 'user' ? 'selected' : ''}>User (Reader)</option>
+            <option value="publisher" ${user.role === 'publisher' ? 'selected' : ''}>Publisher</option>
+          </select>
+        `;
+
       return `
         <tr>
           <td><img src="${avatar}" alt="Avatar" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover;"></td>
           <td>${user.username}</td>
           <td>${user.email}</td>
-          <td><span class="profile-role-badge" style="font-size: 0.75rem;">${user.role}</span></td>
+          <td>${roleColumn}</td>
           <td>${dateStr}</td>
           <td>${deleteBtn}</td>
         </tr>
@@ -190,6 +202,15 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.addEventListener('click', (e) => {
         const id = e.currentTarget.getAttribute('data-id');
         deleteUserAction(id);
+      });
+    });
+
+    // Bind role select change
+    usersTableBody.querySelectorAll('.role-select').forEach(select => {
+      select.addEventListener('change', async (e) => {
+        const id = e.currentTarget.getAttribute('data-id');
+        const newRole = e.currentTarget.value;
+        await updateUserRoleAction(id, newRole);
       });
     });
   }
@@ -412,6 +433,33 @@ document.addEventListener('DOMContentLoaded', () => {
       UI.hideLoader();
       console.error(error);
       UI.showToast('Network error, action failed', 'error');
+    }
+  }
+
+  // Update User Role Action
+  async function updateUserRoleAction(id, role) {
+    try {
+      UI.showLoader();
+      const res = await fetch(`${CONFIG.API_URL}/users/${id}/role`, {
+        method: 'PUT',
+        headers: Auth.getHeaders(),
+        body: JSON.stringify({ role })
+      });
+      const data = await res.json();
+      UI.hideLoader();
+
+      if (res.ok && data.success) {
+        UI.showToast(`User role updated to ${role}`, 'success');
+        initDashboard(); // Refresh stats/lists
+      } else {
+        UI.showToast(data.message || 'Could not update user role', 'error');
+        initDashboard(); // Revert selection by reloading
+      }
+    } catch (error) {
+      UI.hideLoader();
+      console.error(error);
+      UI.showToast('Network error, role update failed', 'error');
+      initDashboard(); // Revert
     }
   }
 

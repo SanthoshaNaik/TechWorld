@@ -24,12 +24,12 @@ exports.registerUser = async (req, res, next) => {
       });
     }
 
-    // Create user
+    // Create user (enforcing 'user' role for all public registrations)
     const user = await User.create({
       username,
       email,
       password,
-      role: role || 'user' // Default to user, publisher is also possible
+      role: 'user'
     });
 
     if (user) {
