@@ -1,4 +1,6 @@
 const jwt = require('jsonwebtoken');
+const fs = require('fs');
+const path = require('path');
 const User = require('../models/User');
 
 // Helper function to generate JWT token
@@ -123,7 +125,24 @@ exports.updateProfile = async (req, res, next) => {
     if (user) {
       user.username = req.body.username || user.username;
       user.email = req.body.email || user.email;
-      user.profilePic = req.body.profilePic !== undefined ? req.body.profilePic : user.profilePic;
+
+      // Handle profile picture file upload
+      if (req.file) {
+        // Delete old profile picture if it was an uploaded file locally
+        if (user.profilePic && user.profilePic.startsWith('/uploads/')) {
+          const oldPath = path.join(__dirname, '..', user.profilePic);
+          if (fs.existsSync(oldPath)) {
+            try {
+              fs.unlinkSync(oldPath);
+            } catch (err) {
+              console.error('Failed to delete old profile photo:', err);
+            }
+          }
+        }
+        user.profilePic = `/uploads/${req.file.filename}`;
+      } else if (req.body.profilePic !== undefined) {
+        user.profilePic = req.body.profilePic;
+      }
 
       if (req.body.password) {
         user.password = req.body.password;

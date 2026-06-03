@@ -20,9 +20,9 @@ const seedData = async () => {
 
     // Create default accounts
     const publisher = await User.create({
-      username: 'publisher',
-      email: 'publisher@techworld.com',
-      password: 'password123',
+      username: 'Santhosh Naik',
+      email: 'santhoshnaik546@gmail.com',
+      password: 'Nsanthu@12',
       role: 'publisher',
       profilePic: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80'
     });
@@ -36,8 +36,8 @@ const seedData = async () => {
     });
 
     console.log('Default accounts created:');
-    console.log(' - Publisher: publisher@techworld.com / password123');
-    console.log(' - User: user@techworld.com / password123');
+    console.log(' - Publisher: santhoshnaik546@gmail.com / Nsanthu@12 (Santhosh Naik)');
+    console.log(' - User: user@techworld.com / password123 (harshith)');
 
     // Create dummy posts
     const samplePosts = [

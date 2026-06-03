@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const profileForm = document.getElementById('profile-edit-form');
   const usernameInput = document.getElementById('profile-username');
   const emailInput = document.getElementById('profile-email');
-  const profilePicInput = document.getElementById('profile-pic-url');
+  const profilePicInput = document.getElementById('profile-pic-file');
   const passwordInput = document.getElementById('profile-password');
 
   const bookmarksGrid = document.getElementById('bookmarks-grid');
@@ -62,7 +62,11 @@ document.addEventListener('DOMContentLoaded', () => {
     sidebarRole.textContent = userData.role;
     
     if (userData.profilePic) {
-      sidebarAvatar.src = userData.profilePic;
+      let avatarUrl = userData.profilePic;
+      if (avatarUrl && !avatarUrl.startsWith('http://') && !avatarUrl.startsWith('https://')) {
+        avatarUrl = `${CONFIG.BASE_URL}${avatarUrl}`;
+      }
+      sidebarAvatar.src = avatarUrl;
     } else {
       sidebarAvatar.src = 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80';
     }
@@ -79,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function populateFormFields() {
     usernameInput.value = userData.username;
     emailInput.value = userData.email;
-    profilePicInput.value = userData.profilePic || '';
+    profilePicInput.value = ''; // Reset file input
     passwordInput.value = ''; // Keep password blank
   }
 
@@ -144,7 +148,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const username = usernameInput.value.trim();
     const email = emailInput.value.trim();
-    const profilePic = profilePicInput.value.trim();
     const password = passwordInput.value.trim();
 
     // Client-side validations
@@ -164,18 +167,34 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    const payload = { username, email, profilePic };
+    // Create FormData for multipart upload
+    const formData = new FormData();
+    formData.append('username', username);
+    formData.append('email', email);
+    
     if (password) {
-      payload.password = password;
+      formData.append('password', password);
+    }
+
+    // If file is selected, append it
+    if (profilePicInput.files && profilePicInput.files.length > 0) {
+      formData.append('profilePic', profilePicInput.files[0]);
     }
 
     try {
       UI.showLoader();
 
+      // Get authorization header without setting Content-Type
+      const headers = {};
+      const token = Auth.getToken();
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+
       const res = await fetch(`${CONFIG.API_URL}/auth/profile`, {
         method: 'PUT',
-        headers: Auth.getHeaders(),
-        body: JSON.stringify(payload)
+        headers: headers,
+        body: formData
       });
 
       const data = await res.json();

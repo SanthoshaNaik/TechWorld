@@ -69,7 +69,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Author Details
     postAuthorName.textContent = post.author.username;
     if (post.author.profilePic) {
-      postAuthorAvatar.src = post.author.profilePic;
+      let authorAvatarUrl = post.author.profilePic;
+      if (authorAvatarUrl && !authorAvatarUrl.startsWith('http://') && !authorAvatarUrl.startsWith('https://')) {
+        authorAvatarUrl = `${CONFIG.BASE_URL}${authorAvatarUrl}`;
+      }
+      postAuthorAvatar.src = authorAvatarUrl;
     }
 
     // Date
@@ -151,9 +155,12 @@ document.addEventListener('DOMContentLoaded', () => {
         minute: '2-digit'
       });
 
-      const avatar = comment.user && comment.user.profilePic 
+      let avatar = comment.user && comment.user.profilePic 
         ? comment.user.profilePic 
         : 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=80&q=80';
+      if (avatar && !avatar.startsWith('http://') && !avatar.startsWith('https://')) {
+        avatar = `${CONFIG.BASE_URL}${avatar}`;
+      }
 
       return `
         <div class="comment-card">
