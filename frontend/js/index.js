@@ -81,6 +81,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const likesCount = post.likes ? post.likes.length : 0;
       const commentsCount = post.comments ? post.comments.length : 0;
 
+      let avatarUrl = post.author.profilePic || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=80&q=80';
+      if (avatarUrl && !avatarUrl.startsWith('http://') && !avatarUrl.startsWith('https://')) {
+        avatarUrl = `${CONFIG.BASE_URL}${avatarUrl}`;
+      }
+
       return `
         <article class="post-card" onclick="window.location.href='post-detail.html?id=${post._id}'" style="cursor: pointer;">
           <div class="card-img-wrapper">
@@ -92,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <p class="card-desc">${post.description}</p>
             <div class="card-footer">
               <div class="author-info">
-                <img class="author-avatar" src="${post.author.profilePic || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=80&q=80'}" alt="${post.author.username}">
+                <img class="author-avatar" src="${avatarUrl}" alt="${post.author.username}">
                 <div>
                   <span class="author-name">${post.author.username}</span>
                 </div>

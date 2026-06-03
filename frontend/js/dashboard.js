@@ -164,7 +164,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentUser = Auth.getUser();
 
     usersTableBody.innerHTML = users.map(user => {
-      const avatar = user.profilePic || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=80&q=80';
+      let avatar = user.profilePic || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=80&q=80';
+      if (avatar && !avatar.startsWith('http://') && !avatar.startsWith('https://')) {
+        avatar = `${CONFIG.BASE_URL}${avatar}`;
+      }
       const dateStr = new Date(user.createdAt).toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'short',

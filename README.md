@@ -98,8 +98,8 @@ npm run seed
 ```
 **Default Seed Accounts created:**
 * **Publisher Account (Dashboard Editor):**
-  * Email: `publisher@techworld.com`
-  * Password: `password123`
+  * Email: `santhoshnaik546@gmail.com`
+  * Password: `Nsanthu@12`
 * **Reader Account (User):**
   * Email: `user@techworld.com`
   * Password: `password123`
