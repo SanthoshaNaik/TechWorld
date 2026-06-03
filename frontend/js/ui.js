@@ -95,7 +95,7 @@ const UI = {
       <nav class="navbar">
         <div class="nav-brand">
           <a href="index.html" class="brand-link">
-            <span class="brand-logo"><i class="fas fa-laptop-code"></i></span>
+            <span class="brand-logo"><img src="images/logo.jpg" alt="TechWorld Logo"></span>
             <span class="brand-name">Tech<span class="text-red">World</span></span>
           </a>
         </div>
