@@ -44,3 +44,32 @@ exports.deleteUser = async (req, res, next) => {
     next(error);
   }
 };
+
+// @desc    Update user role
+// @route   PUT /api/users/:id/role
+// @access  Private/Publisher
+exports.updateUserRole = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.id);
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    // Don't allow publishers to change their own role to avoid lockout
+    if (user._id.toString() === req.user._id.toString()) {
+      return res.status(400).json({ success: false, message: 'You cannot change your own publisher role' });
+    }
+
+    user.role = req.body.role || user.role;
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: `User role updated successfully to ${user.role}`,
+      data: user
+    });
+  } catch (error) {
+    next(error);
+  }
+};

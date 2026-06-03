@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const registerForm = document.getElementById('register-form');
   const usernameInput = document.getElementById('username');
   const emailInput = document.getElementById('email');
-  const roleInput = document.getElementById('role');
   const passwordInput = document.getElementById('password');
   const confirmPasswordInput = document.getElementById('confirm-password');
 
@@ -36,7 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const username = usernameInput.value.trim();
     const email = emailInput.value.trim();
-    const role = roleInput.value;
     const password = passwordInput.value.trim();
     const confirmPassword = confirmPasswordInput.value.trim();
 
@@ -78,7 +76,6 @@ document.addEventListener('DOMContentLoaded', () => {
         body: JSON.stringify({
           username,
           email,
-          role,
           password
         })
       });
