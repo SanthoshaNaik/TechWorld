@@ -848,6 +848,22 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text);
 }
 
+.delete-comment-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px 8px;
+  font-size: 0.85rem;
+  transition: var(--transition);
+  align-self: flex-start;
+}
+
+.delete-comment-btn:hover {
+  color: var(--error);
+  transform: scale(1.15);
+}
+
 /* ==========================================================================
    Page layouts: User Profile Page
    ========================================================================== */

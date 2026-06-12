@@ -8,6 +8,7 @@ const {
   deletePost,
   toggleLikePost,
   addCommentPost,
+  deleteCommentPost,
   toggleBookmarkPost
 } = require('../controllers/postController');
 const { protect, authorize } = require('../middleware/authMiddleware');
@@ -29,6 +30,7 @@ router
 // Social interactions
 router.put('/:id/like', protect, toggleLikePost);
 router.post('/:id/comment', protect, addCommentPost);
+router.delete('/:id/comment/:commentId', protect, deleteCommentPost);
 router.put('/:id/bookmark', protect, toggleBookmarkPost);
 
 module.exports = router;
