@@ -74,6 +74,10 @@ document.addEventListener('DOMContentLoaded', () => {
         authorAvatarUrl = `${CONFIG.BASE_URL}${authorAvatarUrl}`;
       }
       postAuthorAvatar.src = authorAvatarUrl;
+      postAuthorAvatar.onerror = () => {
+        postAuthorAvatar.onerror = null;
+        postAuthorAvatar.src = 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=80&q=80';
+      };
     }
 
     // Date
@@ -175,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       return `
         <div class="comment-card">
-          <img src="${avatar}" alt="${comment.username}" class="comment-avatar">
+          <img src="${avatar}" alt="${comment.username}" class="comment-avatar" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=80&q=80';">
           <div class="comment-content">
             <div class="comment-user">
               ${comment.username}

@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <p class="card-desc">${post.description}</p>
             <div class="card-footer">
               <div class="author-info">
-                <img class="author-avatar" src="${avatarUrl}" alt="${post.author.username}">
+                <img class="author-avatar" src="${avatarUrl}" alt="${post.author.username}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=80&q=80';">
                 <div>
                   <span class="author-name">${post.author.username}</span>
                 </div>

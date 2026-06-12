@@ -190,7 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       return `
         <tr>
-          <td><img src="${avatar}" alt="Avatar" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover;"></td>
+          <td><img src="${avatar}" alt="Avatar" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover;" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=80&q=80';"></td>
           <td>${user.username}</td>
           <td>${user.email}</td>
           <td>${roleColumn}</td>
