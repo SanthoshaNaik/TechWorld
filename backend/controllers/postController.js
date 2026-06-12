@@ -292,3 +292,46 @@ exports.toggleBookmarkPost = async (req, res, next) => {
     next(error);
   }
 };
+
+// @desc    Delete comment from Post
+// @route   DELETE /api/posts/:id/comment/:commentId
+// @access  Private (Either Comment Author OR Publisher/Admin)
+exports.deleteCommentPost = async (req, res, next) => {
+  try {
+    const post = await Post.findById(req.params.id);
+
+    if (!post) {
+      return res.status(404).json({ success: false, message: 'Post not found' });
+    }
+
+    // Find the comment in the post's comments array
+    const comment = post.comments.id(req.params.commentId);
+    if (!comment) {
+      return res.status(404).json({ success: false, message: 'Comment not found' });
+    }
+
+    // Make sure user is the comment author OR is a publisher
+    if (comment.user.toString() !== req.user._id.toString() && req.user.role !== 'publisher') {
+      return res.status(403).json({
+        success: false,
+        message: 'Not authorized to delete this comment'
+      });
+    }
+
+    // Pull/remove the comment
+    post.comments.pull(req.params.commentId);
+    await post.save();
+
+    // Populate user details for comments before returning
+    const updatedPost = await Post.findById(req.params.id)
+      .populate('comments.user', 'username profilePic');
+
+    res.status(200).json({
+      success: true,
+      message: 'Comment deleted successfully',
+      comments: updatedPost.comments
+    });
+  } catch (error) {
+    next(error);
+  }
+};

@@ -162,6 +162,17 @@ document.addEventListener('DOMContentLoaded', () => {
         avatar = `${CONFIG.BASE_URL}${avatar}`;
       }
 
+      // Check delete permission (comment author OR publisher)
+      const isCommentAuthor = comment.user && (comment.user._id === currentUser._id || comment.user === currentUser._id);
+      const isPublisher = currentUser && currentUser.role === 'publisher';
+      const canDelete = isCommentAuthor || isPublisher;
+
+      const deleteBtn = canDelete
+        ? `<button class="delete-comment-btn" data-comment-id="${comment._id}" title="Delete Comment">
+             <i class="fas fa-trash-alt"></i>
+           </button>`
+        : '';
+
       return `
         <div class="comment-card">
           <img src="${avatar}" alt="${comment.username}" class="comment-avatar">
@@ -172,6 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
             <p class="comment-text">${comment.comment}</p>
           </div>
+          ${deleteBtn}
         </div>
       `;
     }).join('');
@@ -279,6 +291,43 @@ document.addEventListener('DOMContentLoaded', () => {
       UI.hideLoader();
       console.error(error);
       UI.showToast('Network error, comment not sent', 'error');
+    }
+  });
+
+  // Handle Comment Deletion
+  commentsList.addEventListener('click', async (e) => {
+    const deleteBtn = e.target.closest('.delete-comment-btn');
+    if (!deleteBtn) return;
+
+    const commentId = deleteBtn.getAttribute('data-comment-id');
+    if (!commentId) return;
+
+    if (!confirm('Are you sure you want to delete this comment?')) return;
+
+    try {
+      UI.showLoader();
+      const res = await fetch(`${CONFIG.API_URL}/posts/${postId}/comment/${commentId}`, {
+        method: 'DELETE',
+        headers: Auth.getHeaders()
+      });
+
+      const data = await res.json();
+      UI.hideLoader();
+
+      if (res.ok && data.success) {
+        UI.showToast('Comment deleted successfully!', 'success');
+        
+        // Update comments in local state
+        post.comments = data.comments;
+        commentsCount.textContent = data.comments.length;
+        renderComments();
+      } else {
+        UI.showToast(data.message || 'Could not delete comment', 'error');
+      }
+    } catch (error) {
+      UI.hideLoader();
+      console.error(error);
+      UI.showToast('Network error, comment not deleted', 'error');
     }
   });
 
